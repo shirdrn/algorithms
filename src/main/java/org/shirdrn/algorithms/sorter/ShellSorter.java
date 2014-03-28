@@ -1,4 +1,7 @@
-package org.shirdrn.algorithms.sort;
+package org.shirdrn.algorithms.sorter;
+
+import org.shirdrn.algorithms.common.sorter.Sorter;
+import org.shirdrn.algorithms.sorter.factory.SorterFactory;
 
 /**
  * <B>希尔排序算法类</B>
@@ -14,28 +17,22 @@ package org.shirdrn.algorithms.sort;
  * @author shirdrn
  * http://hi.baidu.com/shirdrn/item/e87fb994de42691c924f41d7
  */
-public class ShellSort {
-	private Integer[] array;
+public class ShellSorter extends Sorter {
 
-	public ShellSort(Integer[] array) {
-		this.array = array;
-	}
-
-	public void sort() {
+	@Override
+	public void sort(int[] array) {
 		int d = array.length;
 		do {
 			d /= 2;
-			shellPass(d); // 根据逐渐减小的间隔增量，循环调用一趟排序
+			shellPass(array, d); // 根据逐渐减小的间隔增量，循环调用一趟排序
 		} while (d > 1);
 	}
 
 	/**
 	 * 希尔一趟排序
-	 * 
-	 * @param d
-	 *            间隔增量
+	 * @param d 间隔增量
 	 */
-	private void shellPass(int d) {
+	private void shellPass(int[] array, int d) {
 		Integer tmp;
 		for (int i = d; i < array.length; i++) { // 数组下标从0开始，初始i=d表示一趟排序中第二个元素
 			tmp = array[i]; // array[i]的拷贝
@@ -54,17 +51,9 @@ public class ShellSort {
 		}
 	}
 
-	/**
-	 * 输出数组元素
-	 */
-	public String print() {
-		StringBuffer sb = new StringBuffer();
-		for (int i = 0; i < array.length; i++) {
-			sb.append(array[i]);
-			if (i != array.length - 1) {
-				sb.append(", ");
-			}
-		}
-		return sb.toString();
+	public static void main(String[] args) {
+		int[] a = new int[] {43, 32, 1310, 9, 32, 10};
+		SorterFactory.executeSorter(ShellSorter.class, a);
+		System.out.println(SorterFactory.print(a));
 	}
 }

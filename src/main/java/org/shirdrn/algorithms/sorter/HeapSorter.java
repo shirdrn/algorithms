@@ -1,4 +1,7 @@
-package org.shirdrn.algorithms.sort;
+package org.shirdrn.algorithms.sorter;
+
+import org.shirdrn.algorithms.common.sorter.Sorter;
+import org.shirdrn.algorithms.sorter.factory.SorterFactory;
 
 /**
  * <B>堆排序算法类</B>
@@ -31,16 +34,10 @@ package org.shirdrn.algorithms.sort;
  * @author shirdrn
  * http://hi.baidu.com/shirdrn/item/25d1160dba8d9cdfdde5b0d8
  */
-public class HeapSort {
+public class HeapSorter extends Sorter {
 
-	private Integer[] array;
-
-	public HeapSort(Integer[] array) {
-		this.array = array;
-	}
-
-	public void sort() {
-		heapSort();
+	public void sort(int[] array) {
+		heapSort(array);
 	}
 
 	/**
@@ -49,16 +46,16 @@ public class HeapSort {
 	 * <p>
 	 * 基于大根堆的堆排序方法
 	 */
-	private void heapSort() {
+	private void heapSort(int[] array) {
 		Integer tmp; // 用于交换的暂存单元
-		buildHeap(); // 执行初始建堆，并调整
+		buildHeap(array); // 执行初始建堆，并调整
 		for (int i = 0; i < array.length; i++) {
 			// 交换堆顶元素array[0]和堆中最后一个元素array[array.length-1-i]
 			tmp = array[0];
 			array[0] = array[array.length - 1 - i];
 			array[array.length - 1 - i] = tmp;
 			// 每次交换堆顶元素和堆中最后一个元素之后，都要对堆进行调整
-			adjustHeap(0, array.length - 1 - i);
+			adjustHeap(array, 0, array.length - 1 - i);
 		}
 	}
 
@@ -69,12 +66,12 @@ public class HeapSort {
 	 * 调整堆中0~array.length/2个结点，保持堆的性质
 	 * 
 	 */
-	private void buildHeap() {
+	private void buildHeap(int[] array) {
 		// 求出当前堆中最后一个存在孩子结点的索引
 		int pos = (array.length - 1) / 2;
 		// 从该结点结点开始，执行建堆操作
 		for (int i = pos; i >= 0; i--) {
-			adjustHeap(i, array.length); // 在建堆过程中，及时调整堆中索引为i的结点
+			adjustHeap(array, i, array.length); // 在建堆过程中，及时调整堆中索引为i的结点
 		}
 	}
 
@@ -85,7 +82,7 @@ public class HeapSort {
 	 * @param s 待调整结点的索引
 	 * @param m 待调整堆的结点的数量(亦即：排除叶子结点)
 	 */
-	private void adjustHeap(int s, int m) {
+	private void adjustHeap(int[] array, int s, int m) {
 		Integer tmp = array[s]; // 当前待调整的结点
 		int i = 2 * s + 1; // 当前待调整结点的左孩子结点的索引(i+1为当前调整结点的右孩子结点的索引)
 		while (i < m) {
@@ -103,17 +100,9 @@ public class HeapSort {
 		}
 	}
 
-	/**
-	 * 输出数组元素
-	 */
-	public String print() {
-		StringBuffer sb = new StringBuffer();
-		for (int i = 0; i < array.length; i++) {
-			sb.append(array[i]);
-			if (i != array.length - 1) {
-				sb.append(", ");
-			}
-		}
-		return sb.toString();
+	public static void main(String[] args) {
+		int[] a = new int[] {43, 32, 1310, 9, 32, 10};
+		SorterFactory.executeSorter(HeapSorter.class, a);
+		System.out.println(SorterFactory.print(a));
 	}
 }

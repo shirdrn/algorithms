@@ -1,4 +1,7 @@
-package org.shirdrn.algorithms.sort;
+package org.shirdrn.algorithms.sorter;
+
+import org.shirdrn.algorithms.common.sorter.Sorter;
+import org.shirdrn.algorithms.sorter.factory.SorterFactory;
 
 /**
  * <B>冒泡排序算法类</B>
@@ -27,15 +30,10 @@ package org.shirdrn.algorithms.sort;
  * @author shirdrn
  * http://hi.baidu.com/shirdrn/item/16bc944ba06429e91e19bcd8
  */
-public class BubbleSort {
+public class BubbleSorter extends Sorter {
 
-	private Integer[] array;
-
-	public BubbleSort(Integer[] array) {
-		this.array = array;
-	}
-
-	public void sort() {
+	@Override
+	public void sort(int[] array) {
 		Integer tmp; // 用于交换数据的暂存单元
 		for (int i = array.length - 1; i >= 0; i--) { // 将数组最小索引一端视为“水面”
 			// 将数组最小索引一端视为“水底”，“气泡”从“水底”向“水面”上浮
@@ -50,17 +48,9 @@ public class BubbleSort {
 		}
 	}
 
-	/**
-	 * 输出数组元素
-	 */
-	public String print() {
-		StringBuffer sb = new StringBuffer();
-		for (int i = 0; i < array.length; i++) {
-			sb.append(array[i]);
-			if (i != array.length - 1) {
-				sb.append(", ");
-			}
-		}
-		return sb.toString();
+	public static void main(String[] args) {
+		int[] a = new int[] {43, 32, 1310, 9, 32, 10};
+		SorterFactory.executeSorter(BubbleSorter.class, a);
+		System.out.println(SorterFactory.print(a));
 	}
 }

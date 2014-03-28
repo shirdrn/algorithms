@@ -1,4 +1,7 @@
-package org.shirdrn.algorithms.sort;
+package org.shirdrn.algorithms.sorter;
+
+import org.shirdrn.algorithms.common.sorter.Sorter;
+import org.shirdrn.algorithms.sorter.factory.SorterFactory;
 
 /**
  * <B>直接选择排序算法类</B>
@@ -23,14 +26,10 @@ package org.shirdrn.algorithms.sort;
  * @author shirdrn
  * http://hi.baidu.com/shirdrn/item/29bae4e787df25256dabb8d8
  */
-public class StraightSelectionSort {
-	private Integer[] array;
+public class StraightSelectionSorter extends Sorter {
 
-	public StraightSelectionSort(Integer[] array) {
-		this.array = array;
-	}
-
-	public void sort() {
+	@Override
+	public void sort(int[] array) {
 		Integer tmp; // 用于交换数据的暂存单元
 		for (int i = 0; i < array.length - 1; i++) { // 这里只要从0~array.length-2即可
 			int k = i;
@@ -47,18 +46,11 @@ public class StraightSelectionSort {
 			// 如果array[i]是无序区最小的元素，不需要执行交换
 		}
 	}
-
-	/**
-	 * 输出数组元素
-	 */
-	public String print() {
-		StringBuffer sb = new StringBuffer();
-		for (int i = 0; i < array.length; i++) {
-			sb.append(array[i]);
-			if (i != array.length - 1) {
-				sb.append(", ");
-			}
-		}
-		return sb.toString();
+	
+	public static void main(String[] args) {
+		int[] a = new int[] {43, 32, 1310, 9, 32, 10};
+		SorterFactory.executeSorter(StraightSelectionSorter.class, a);
+		System.out.println(SorterFactory.print(a));
 	}
+
 }

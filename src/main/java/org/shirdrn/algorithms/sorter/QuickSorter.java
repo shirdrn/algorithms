@@ -1,4 +1,7 @@
-package org.shirdrn.algorithms.sort;
+package org.shirdrn.algorithms.sorter;
+
+import org.shirdrn.algorithms.common.sorter.Sorter;
+import org.shirdrn.algorithms.sorter.factory.SorterFactory;
 
 /**
  * <B>快速排序算法类</B>
@@ -40,16 +43,11 @@ package org.shirdrn.algorithms.sort;
  * @author shirdrn
  * http://hi.baidu.com/shirdrn/item/e85a63ee6384aee0fa42bad8
  */
-public class QuickSort {
+public class QuickSorter extends Sorter {
 
-	private Integer[] array;
-
-	public QuickSort(Integer[] array) {
-		this.array = array;
-	}
-
-	public void sort() {
-		quickSort(0, array.length - 1);
+	@Override
+	public void sort(int[] array) {
+		quickSort(array, 0, array.length - 1);
 	}
 
 	/**
@@ -57,12 +55,12 @@ public class QuickSort {
 	 * @param low 数组首位置索引
 	 * @param high 数组末位置索引
 	 */
-	private void quickSort(int low, int high) {
+	private void quickSort(int[] array, int low, int high) {
 		int pivotPos; // 划分基准元素索引
 		if (low < high) {
-			pivotPos = partition(low, high);
-			quickSort(low, pivotPos - 1); // 左划分递归快速排序
-			quickSort(pivotPos + 1, high); // 右划分递归快速排序
+			pivotPos = partition(array, low, high);
+			quickSort(array, low, pivotPos - 1); // 左划分递归快速排序
+			quickSort(array, pivotPos + 1, high); // 右划分递归快速排序
 		}
 	}
 
@@ -89,7 +87,7 @@ public class QuickSort {
 	 * @param j
 	 * @return
 	 */
-	private int partition(int i, int j) {
+	private int partition(int[] array, int i, int j) {
 		Integer pivot = array[i]; // 初始基准元素，如果quickSort方法第一次调用，pivot初始为数组第一个元素
 		while (i < j) { // 两个指针从两边向中间靠拢，不能相交
 			// 右侧指针向左移动
@@ -113,17 +111,9 @@ public class QuickSort {
 		return i;
 	}
 
-	/**
-	 * 输出数组元素
-	 */
-	public String print() {
-		StringBuffer sb = new StringBuffer();
-		for (int i = 0; i < array.length; i++) {
-			sb.append(array[i]);
-			if (i != array.length - 1) {
-				sb.append(", ");
-			}
-		}
-		return sb.toString();
+	public static void main(String[] args) {
+		int[] a = new int[] {43, 32, 1310, 9, 32, 10};
+		SorterFactory.executeSorter(QuickSorter.class, a);
+		System.out.println(SorterFactory.print(a));
 	}
 }

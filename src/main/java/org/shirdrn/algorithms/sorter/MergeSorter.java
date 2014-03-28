@@ -1,4 +1,7 @@
-package org.shirdrn.algorithms.sort;
+package org.shirdrn.algorithms.sorter;
+
+import org.shirdrn.algorithms.common.sorter.Sorter;
+import org.shirdrn.algorithms.sorter.factory.SorterFactory;
 
 /**
  * <B>归并排序算法类</B></br>
@@ -22,19 +25,12 @@ package org.shirdrn.algorithms.sort;
  * @author shirdrn
  * http://hi.baidu.com/shirdrn/item/dd74c7a197277fd85bf191db
  */
-public class MergeSort {
+public class MergeSorter extends Sorter {
 
-	private Integer[] array;
-	/** 辅助归并排序的数组 */
-	private Integer[] auxArray;
-
-	public MergeSort(Integer[] array) {
-		this.array = array;
-		auxArray = new Integer[array.length]; // 初始化辅助数组
-	}
-
-	public void sort() {
-		mergeSort(0, array.length - 1);
+	@Override
+	public void sort(int[] array) {
+		int[] auxArray = new int[array.length];
+		mergeSort(array, auxArray, 0, array.length - 1);
 	}
 
 	/**
@@ -43,17 +39,17 @@ public class MergeSort {
 	 * @param low 待排序数组下标下界
 	 * @param high 待排序数组下标上界
 	 */
-	private void mergeSort(int low, int high) {
+	private void mergeSort(int[] array, int[] auxArray, int low, int high) {
 		int dividedIndex = 0; // 分治位置索引变量
 		if (low < high) {
 			dividedIndex = (low + high) / 2; // 计算分治位置(采用简单的二分思想)
-			mergeSort(low, dividedIndex); // 左侧递归归并排序
-			mergeSort(dividedIndex + 1, high); // 右侧递归归并排序
-			merge(low, dividedIndex, high); // 合并分治结果
+			mergeSort(array, auxArray, low, dividedIndex); // 左侧递归归并排序
+			mergeSort(array, auxArray, dividedIndex + 1, high); // 右侧递归归并排序
+			merge(array, auxArray, low, dividedIndex, high); // 合并分治结果
 		}
 	}
 
-	private void merge(int low, int dividedIndex, int high) {
+	private void merge(int[] array, int[] auxArray, int low, int dividedIndex, int high) {
 		int i = low; // 指向左半分区数组的指针
 		int j = dividedIndex + 1; // 指向右半分区数组的指针
 		int auxPtr = 0; // 指向辅助区数组的指针
@@ -81,17 +77,9 @@ public class MergeSort {
 		}
 	}
 
-	/**
-	 * 输出数组元素
-	 */
-	public String print() {
-		StringBuffer sb = new StringBuffer();
-		for (int i = 0; i < array.length; i++) {
-			sb.append(array[i]);
-			if (i != array.length - 1) {
-				sb.append(", ");
-			}
-		}
-		return sb.toString();
+	public static void main(String[] args) {
+		int[] a = new int[] {43, 32, 1310, 9, 32, 10};
+		SorterFactory.executeSorter(MergeSorter.class, a);
+		System.out.println(SorterFactory.print(a));
 	}
 }

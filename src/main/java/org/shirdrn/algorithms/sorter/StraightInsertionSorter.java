@@ -1,4 +1,7 @@
-package org.shirdrn.algorithms.sort;
+package org.shirdrn.algorithms.sorter;
+
+import org.shirdrn.algorithms.common.sorter.Sorter;
+import org.shirdrn.algorithms.sorter.factory.SorterFactory;
 
 /**
  * <B>直接插入排序算法类</B>
@@ -11,22 +14,11 @@ package org.shirdrn.algorithms.sort;
  * @author shirdrn
  * http://hi.baidu.com/shirdrn/item/907adbe122ce9a394ddcafdb
  */
-public class StraightInsertionSort {
+public class StraightInsertionSorter extends Sorter {
 
-	/**
-	 * 待排序数组
-	 */
-	private Integer[] array;
-
-	public StraightInsertionSort(Integer[] array) {
-		this.array = array;
-	}
-
-	/**
-	 * 实现排序方法
-	 */
-	public void sort() {
-		Integer tmp;
+	@Override
+	public void sort(int[] array) {
+		int tmp;
 		for (int i = 1; i < array.length; i++) {
 			tmp = array[i]; // array[i]的拷贝
 			// 如果右侧无序区第一个元素array[i] < 左侧有序区最大的array[i-1]，
@@ -44,17 +36,9 @@ public class StraightInsertionSort {
 		}
 	}
 
-	/**
-	 * 输出数组元素
-	 */
-	public String print() {
-		StringBuffer sb = new StringBuffer();
-		for (int i = 0; i < array.length; i++) {
-			sb.append(array[i]);
-			if (i != array.length - 1) {
-				sb.append(", ");
-			}
-		}
-		return sb.toString();
+	public static void main(String[] args) {
+		int[] a = new int[] {43, 32, 1310, 9, 32, 10};
+		SorterFactory.executeSorter(StraightInsertionSorter.class, a);
+		System.out.println(SorterFactory.print(a));
 	}
 }
