@@ -39,7 +39,7 @@ public class BubbleSorter extends Sorter {
 			// 将数组最小索引一端视为“水底”，“气泡”从“水底”向“水面”上浮
 			// 因为i每增加1，就有一个上浮到最终排序位置，所以，只需要对1~i个元素进行交换排序
 			for (int j = 1; j <= i; j++) {
-				if (array[j - 1] > array[j]) { // 如果上浮过程中发现存在比当前元素小的，就交换，将小的交换到“水面”
+				if (array[j - 1] < array[j]) { // 如果上浮过程中发现存在比当前元素小的，就交换，将小的交换到“水面”
 					tmp = array[j - 1];
 					array[j - 1] = array[j];
 					array[j] = tmp;
@@ -49,7 +49,7 @@ public class BubbleSorter extends Sorter {
 	}
 
 	public static void main(String[] args) {
-		int[] a = new int[] {43, 32, 1310, 9, 32, 10};
+		int[] a = new int[] {94,12,34,76,26,9,0,37,55,76,37,5,68,83,90,37,12,65,76,49};
 		SorterFactory.executeSorter(BubbleSorter.class, a);
 		System.out.println(SorterFactory.print(a));
 	}
