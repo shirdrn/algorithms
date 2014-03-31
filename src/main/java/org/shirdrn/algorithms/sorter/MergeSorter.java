@@ -61,12 +61,12 @@ public class MergeSorter extends Sorter {
 				auxArray[auxPtr++] = array[i++];
 			}
 		}
-		// 如果array[low..dividedIndex].lenght>array[dividedIndex+1..high].length，经过上面合并
+		// 如果array[low..dividedIndex].length>array[dividedIndex+1..high].length，经过上面合并
 		// array[low..dividedIndex]没有合并完，则直接将array[low..dividedIndex]中没有合并的元素复制到辅助数组auxArray中去
 		while (i <= dividedIndex) {
 			auxArray[auxPtr++] = array[i++];
 		}
-		// 如果array[low..dividedIndex].lenght<array[dividedIndex+1..high].length，经过上面合并
+		// 如果array[low..dividedIndex].length<array[dividedIndex+1..high].length，经过上面合并
 		// array[dividedIndex+1..high]没有合并完，则直接将array[dividedIndex+1..high]中没有合并的元素复制到辅助数组auxArray中去
 		while (j <= high) {
 			auxArray[auxPtr++] = array[j++];
